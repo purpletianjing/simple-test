@@ -1,5 +1,4 @@
 function median(filterArr) {
-  var result = 0;
   var len = filterArr.length;
   filterArr.sort(function(a,b) {
     return a - b;
