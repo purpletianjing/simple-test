@@ -1,23 +1,27 @@
-function even_group_calculate_average(arr) {
-  var result = [];
 
-  var temp = arr.filter(function(val, key) {
-    return key % 2 === 1;
-  }).filter(function(val) {
-    return val % 2 === 0;
-  }).reduce(function(a, b) {
-    var len = b.toString().length;
-    a[len] = a[len] || [];
-    a[len].push(b);
-    return a;
-  }, {});
-
-  for(var i in temp) {
-    var avg = temp[i].reduce(function(a ,b) {
-      return a + b;
-    }) / temp[i].length
-    result.push(avg);
+function getAvg(newArr) {
+  var classifyResultByBit = {};
+  var avgResult = [];
+  newArr.forEach(function(val) {
+    classifyResultByBit[val.toString().length] = classifyResultByBit[val.toString().length] || [];
+    classifyResultByBit[val.toString().length].push(val);
+  });
+  for(var everyResult in classifyResultByBit) {
+    var avg = classifyResultByBit[everyResult].reduce(function(val,after){
+      return val + after;
+    }) / classifyResultByBit[everyResult].length;
+    avgResult.push(avg);
   }
+  return avgResult;
+}
 
+function even_group_calculate_average(arr) {
+  var filterArr = arr.filter(function(val,index) {
+    return ((index + 1) % 2 === 0)&&(val % 2 === 0);
+  });
+  var result = getAvg(filterArr);
   return result.length ? result : [0];
 }
+
+
+
